@@ -55,7 +55,9 @@ on:
         - xtensa-intel_s1000_zephyr-elf
         - xtensa-nxp_imx_adsp_zephyr-elf
         - xtensa-nxp_imx8m_adsp_zephyr-elf
+        - xtensa-amd_mpipu_zephyr-elf
         - xtensa-sample_controller_zephyr-elf
+        - xtensa-amd_mpipu_zephyr-elf
       debug:
         description: 'Debug'
         type: choice
@@ -162,6 +164,7 @@ jobs:
             xtensa-nxp_imx_adsp_zephyr-elf)       build_target_xtensa_nxp_imx_adsp_zephyr_elf="y";;
             xtensa-nxp_imx8m_adsp_zephyr-elf)     build_target_xtensa_nxp_imx8m_adsp_zephyr_elf="y";;
             xtensa-sample_controller_zephyr-elf)  build_target_xtensa_sample_controller_zephyr_elf="y";;
+            xtensa-amd_mpipu_zephyr-elf)          build_target_xtensa_amd_mpipu_zephyr_elf="y";;
           esac
 
           MATRIX_DEBUG="${{ github.event.inputs.debug }}"
@@ -196,6 +199,7 @@ jobs:
           build_target_xtensa_nxp_imx_adsp_zephyr_elf="y"
           build_target_xtensa_nxp_imx8m_adsp_zephyr_elf="y"
           build_target_xtensa_sample_controller_zephyr_elf="y"
+          build_target_xtensa_amd_mpipu_zephyr_elf="y"
         fi
 
         # Build 'linux_x86_64' by default if no host is selected
@@ -270,6 +274,7 @@ jobs:
         [ "${build_target_xtensa_nxp_imx_adsp_zephyr_elf}" == "y" ]       && MATRIX_TARGETS+='"xtensa-nxp_imx_adsp_zephyr-elf",'
         [ "${build_target_xtensa_nxp_imx8m_adsp_zephyr_elf}" == "y" ]     && MATRIX_TARGETS+='"xtensa-nxp_imx8m_adsp_zephyr-elf",'
         [ "${build_target_xtensa_sample_controller_zephyr_elf}" == "y" ]  && MATRIX_TARGETS+='"xtensa-sample_controller_zephyr-elf",'
+        [ "${build_target_xtensa_amd_mpipu_zephyr_elf}" == "y" ]          && MATRIX_TARGETS+='"xtensa-amd_mpipu_zephyr-elf",'
         MATRIX_TARGETS+=']'
 
         # Generate test environment list
@@ -1524,6 +1529,9 @@ jobs:
               ;;
             xtensa-sample_controller_zephyr-elf)
               PLATFORM_ARGS+="-p qemu_xtensa "
+              ;;
+            xtensa-amd_mpipu_zephyr-elf)
+              PLATFORM_ARGS+="-p amd_mpipu "
               ;;
           esac
         done
